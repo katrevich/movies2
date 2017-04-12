@@ -1,0 +1,18 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Poster</th>
+      <th>Release date</th>
+      <th>Name</th>
+      <th>Vote (average)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let movie of movies">
+      <td><img *ngIf="movie.poster_path" [src]="'https://image.tmdb.org/t/p/w185' + movie.poster_path" alt=""></td>
+      <td>{{movie.release_date}}</td>
+      <td>{{movie.title}}</td>
+      <td>{{movie.vote_average}}</td>
+    </tr>
+  </tbody>
+</table>

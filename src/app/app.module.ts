@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { Themdb } from './services/themdb.service';
 import { User } from './services/user.service';
@@ -14,6 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SearchComponent } from './components/search/search.component';
 import { VoteComponent } from './components/vote/vote.component';
 import { NavComponent } from './components/common/nav/nav.component';
+import { MoviesListComponent } from './components/common/movies-list/movies-list.component';
 
 const routes: Routes = [
   { path: 'search', component: SearchComponent, canActivate: [LoginGuard] },
@@ -28,12 +30,14 @@ const routes: Routes = [
     LoginComponent,
     SearchComponent,
     VoteComponent,
-    NavComponent
+    NavComponent,
+    MoviesListComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
+    ReactiveFormsModule,
     NgbModule.forRoot(),
     RouterModule.forRoot(routes)
   ],
