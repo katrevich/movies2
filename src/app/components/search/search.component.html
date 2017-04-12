@@ -1,4 +1,90 @@
-<mv-nav></mv-nav>
-<p>
-  search works!
-</p>
+<div class="container">
+  <mv-nav></mv-nav>
+
+  <ngb-tabset>
+  <ngb-tab title="Discover">
+    <template ngbTabContent>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="">Year</label>
+            <select class="form-control">
+              <option value="1984">1984</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="">Genres</label>
+            <select class="form-control">
+              <option value="Action">Action</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <h2>Suggestions</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+  </ngb-tab>
+  <ngb-tab title="Search">
+    <template ngbTabContent>
+      <div class="form-group">
+        <label for="">Name</label>
+        <input type="text" placeholder="name" class="form-control">
+      </div>
+      <h2>Search results</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
+  </ngb-tab>
+</ngb-tabset>
+
+
+
+
+</div>

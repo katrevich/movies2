@@ -1,8 +1,13 @@
-<h1>
-  {{title}}
-</h1>
-<ul>
-  <li><a [routerLink]="['/login']">login</a></li>
-  <li><a [routerLink]="['/search']">search</a></li>
-  <li><a [routerLink]="['/vote']">vote</a></li>
-</ul>
+<nav class="navbar navbar-light bg-faded rounded navbar-toggleable-md">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#containerNavbar" aria-controls="containerNavbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="/">Movies2</a>
+
+  <div class="collapse navbar-collapse" id="containerNavbar">
+    <ul class="navbar-nav mr-auto">
+      <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/search']">Search</a></li>
+      <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/vote']">Vote</a></li>
+    </ul>
+  </div>
+</nav>
