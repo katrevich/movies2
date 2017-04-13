@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../../../services/user.service';
 
 @Component({
   selector: 'mv-nav',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _user: User) { }
 
   ngOnInit() {
   }
+
+  // logout(): void{
+  //   this._user.logout();
+  // }
 
 }

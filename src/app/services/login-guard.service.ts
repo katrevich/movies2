@@ -8,7 +8,7 @@ export class LoginGuard implements CanActivate {
   constructor(private _user: User, private _router: Router) {}
 
   canActivate() : boolean {
-    if (!this._user.isloggedIn()){
+    if (!this._user.isLoggedIn()){
       this._router.navigate(['/login']);
       return false;
     }

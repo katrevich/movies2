@@ -8,6 +8,18 @@ export class User{
   private logginedIn = true;
   private authUrl = 'http://demo2841767.mockable.io/auth';
 
+  get username(): string {
+    return localStorage.getItem('username');
+  }
+
+  get voted(): boolean {
+    return JSON.parse(localStorage.getItem('voted'));
+  }
+
+  get removed(): boolean {
+    return JSON.parse(localStorage.getItem('removed'));
+  }
+
   constructor(private _http: Http, private _router: Router){
     if(localStorage.getItem('token') === null) {
       this.logginedIn = false;
@@ -19,6 +31,9 @@ export class User{
         .post(this.authUrl, { username, password })
         .subscribe((res: Response) => {
             localStorage.setItem('token', res.json().token);
+            localStorage.setItem('username', res.json().username);
+            localStorage.setItem('voted', res.json().voted);
+            localStorage.setItem('removed', res.json().voted);
             this.logginedIn = true;
             this._router.navigate(['/search']);
           },
@@ -27,14 +42,30 @@ export class User{
             console.log(err);
           }
         )
-}
+  }
+
+  voteMade() {
+    //TODO: update user in db
+    console.log('vote made');
+    localStorage.setItem('voted', "true");
+  }
+
+  removeMade() {
+    //TODO: update user in db
+    console.log('remove made');
+    localStorage.setItem('removed', "true");
+  }
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('voted');
+    localStorage.removeItem('removed');
     this.logginedIn = false;
+    this._router.navigate(['/']);
   }
 
-  isloggedIn(): boolean {
+  isLoggedIn(): boolean {
     return this.logginedIn;
   }
 }

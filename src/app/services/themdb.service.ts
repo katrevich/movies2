@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Response } from '@angular/http';
+import { HttpInterceptor } from './http-interceptor.service';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
@@ -20,7 +21,7 @@ export interface IGenre {
 export interface IMovie {
   adult: boolean;
   backdrop_path: string;
-  genre_ids: Array<number>
+  genre_ids: Array<number>;
   id: number;
   original_language: string;
   original_title: string;
@@ -42,43 +43,33 @@ export class Themdb {
   };
   private _apiUrl: string = 'https://api.themoviedb.org/3';
 
-  constructor(private _http: Http){}
+  constructor(private _http: HttpInterceptor){}
 
   discoverMovies(name: string){
     return this._http.get(`${this._apiUrl}/discover/movie`, {
       params: {...this._dbOptions, name}
     })
-    .map((res: Response) => res.json().results , this.errorHandler)
-    .catch((err: any) => this.errorHandler(err))
+    .map((res: Response) => res.json().results)
   }
 
   findMoviesByName(query: string){
     return this._http.get(`${this._apiUrl}/search/movie`, {
       params: {...this._dbOptions, query}
     })
-    .map((res: Response) => res.json().results , this.errorHandler)
-    .catch((err: any) => this.errorHandler(err))
+    .map((res: Response) => res.json().results)
   }
 
   getGenres(){
     return this._http.get(`${this._apiUrl}/genre/movie/list`, {
       params: this._dbOptions
     })
-    .map((res: Response) => res.json().genres , this.errorHandler)
-    .catch((err: any) => this.errorHandler(err))
+    .map((res: Response) => res.json().genres)
   }
 
   getUpcomingMovies(){
     return this._http.get(`${this._apiUrl}/movie/upcoming`, {
       params: this._dbOptions
     })
-    .map((res: Response) => res.json().results , this.errorHandler)
-    .catch((err: any) => this.errorHandler(err))
-  }
-
-  errorHandler(err: any){
-    console.log('Error:');
-    console.log(err);
-    return Observable.throw('Server error');
+    .map((res: Response) => res.json().results)
   }
 }

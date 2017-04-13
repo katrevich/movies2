@@ -22,7 +22,7 @@
           </div>
         </div>
         <h2>Suggestions</h2>
-        <mv-movies-list></mv-movies-list>
+        <mv-movies-list [searching]="true"></mv-movies-list>
       </template>
     </ngb-tab>
     <ngb-tab title="Search">
@@ -32,7 +32,7 @@
           <input type="text" placeholder="name" class="form-control" [(ngModel)]="name" (keyup.enter)="findMovies()">
         </div>
         <h2>Search results for: <b>{{name}}</b></h2>
-        <mv-movies-list [movies]="moviesList"></mv-movies-list>
+        <mv-movies-list [movies]="moviesList" [searching]="true" (voted)="propose($event)"></mv-movies-list>
       </template>
     </ngb-tab>
   </ngb-tabset>

@@ -1,0 +1,7 @@
+.user-block{
+  white-space: nowrap;
+}
+
+.user-block .btn{
+  margin-left: 10px;
+}

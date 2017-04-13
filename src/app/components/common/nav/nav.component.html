@@ -10,4 +10,12 @@
       <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/vote']">Vote</a></li>
     </ul>
   </div>
+
+  <div class="user-block" *ngIf="_user.isLoggedIn()">
+    {{_user.username}}
+    <button class="btn" (click)="_user.logout()">Logout</button>
+  </div>
+  <div class="user-block" *ngIf="!_user.isLoggedIn()">
+    <button class="btn" [routerLink]="['/login']">login</button>
+  </div>
 </nav>
