@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit {
 
   propose(movie: IMovie): void {
     let username: string = this._user.username;
-    this._movie.addMovie(movie, username).subscribe(res => {
+    this._movie.addMovie(movie).subscribe(res => {
       this._toasts.success(`Movie proposed: ${movie.title} by ${username}!`);
     });
   }

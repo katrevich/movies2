@@ -5,7 +5,7 @@ import 'rxjs/add/operator/catch';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Injectable()
-export class HttpInterceptor extends Http {
+export class AuthInterceptor extends Http {
   private _url: string | Request;
 
   constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, private _toasts: ToastsManager) {
@@ -13,6 +13,16 @@ export class HttpInterceptor extends Http {
   }
 
   request(url: Request, options?: RequestOptionsArgs): Observable<Response>{
+    let token = localStorage.getItem('token');
+    
+    if (typeof url === 'string') {
+      if (!options) {
+        options = {headers: new Headers()};
+      }
+      options.headers.set('Authorization', token);
+    } else {
+      url.headers.set('Authorization', token);
+    }
     return super.request(url, options).catch(this.catchError(this))
   }
 
@@ -21,7 +31,7 @@ export class HttpInterceptor extends Http {
     return super.get(url, options).catch(this.catchError(this));
   }
 
-  private catchError (self: HttpInterceptor) {
+  private catchError (self: AuthInterceptor) {
     return (res: Response) => {
       // this._toasts.error('Error: ' + this._url + res.status);
       this._toasts.error(`Error:

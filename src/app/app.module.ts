@@ -14,6 +14,7 @@ import { User } from './services/user.service';
 import { Movie } from './services/movie.service';
 import { LoginGuard } from './services/login-guard.service';
 import { HttpInterceptor } from './services/http-interceptor.service';
+import { AuthInterceptor } from './services/auth-interceptor.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -55,8 +56,14 @@ const routes: Routes = [
     Movie,
     {
         provide: HttpInterceptor,
-        useFactory: (backend: XHRBackend, defaultOptions: RequestOptions, toasts: ToastsManager) =>
+        useFactory:(backend: XHRBackend, defaultOptions: RequestOptions, toasts: ToastsManager) =>
             new HttpInterceptor(backend, defaultOptions, toasts),
+        deps: [XHRBackend, RequestOptions, ToastsManager]
+    },
+    {
+        provide: AuthInterceptor,
+        useFactory:(backend: XHRBackend, defaultOptions: RequestOptions, toasts: ToastsManager) =>
+            new AuthInterceptor(backend, defaultOptions, toasts),
         deps: [XHRBackend, RequestOptions, ToastsManager]
     }
   ],

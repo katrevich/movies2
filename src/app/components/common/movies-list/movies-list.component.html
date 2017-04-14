@@ -24,7 +24,7 @@
       <td *ngIf="voting">{{movie.votes}}</td>
       <th *ngIf="voting">
         <button class="btn" (click)="onClick(movie);" *ngIf="_user.isLoggedIn() && !_user.voted">Vote</button>
-        <button class="btn" (click)="onClickRemove(movie);" *ngIf="(_user.isLoggedIn() && !_user.removed) || (_user.isLoggedIn() && movie.username == _user.username)">Remove</button>
+        <button class="btn" (click)="onClickRemove(movie);" *ngIf="(_user.isLoggedIn() && !_user.removed) || (_user.isLoggedIn() && movie.username == _user.username) || _user.admin">Remove</button>
       </th>
       <th *ngIf="searching"><button class="btn" (click)="onClick(movie);" *ngIf="_user.isLoggedIn()">Propose</button></th>
     </tr>

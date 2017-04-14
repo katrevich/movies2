@@ -1,11 +1,11 @@
 <div class="container">
 
-  <form class="form-signin" (submit)="onSubmit()" [formGroup]="loginForm">
+  <form class="form-signin" (submit)="onSubmit()" [formGroup]="loginForm" novalidate>
     <h2 class="form-signin-heading">Please sign in</h2>
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="text" class="form-control" placeholder="username" required="" formControlname="username">
+    <input type="text" class="form-control" placeholder="username" required="" formControlName="username">
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" class="form-control" placeholder="Password" required="" formControlname="password">
+    <input type="password" class="form-control" placeholder="Password" required="" formControlName="password">
     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
   </form>
 
