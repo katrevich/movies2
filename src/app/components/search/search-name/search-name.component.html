@@ -1,0 +1,8 @@
+<div class="form-group">
+  <label for="">Name</label>
+  <input type="text" placeholder="name" class="form-control" [(ngModel)]="name" (keyup.enter)="findMovies()">
+</div>
+<h2>Search results for: <b>{{name}}</b></h2>
+<ngb-pagination *ngIf="moviesList.length" [maxSize]="10" [collectionSize]="maxPages" [(page)]="page" (pageChange)="pageChange()"></ngb-pagination>
+<mv-movies-list [movies]="moviesList" [searching]="true" (voted)="propose($event)"></mv-movies-list>
+<ngb-pagination *ngIf="moviesList.length" [maxSize]="10" [collectionSize]="maxPages" [(page)]="page" (pageChange)="pageChange()"></ngb-pagination>

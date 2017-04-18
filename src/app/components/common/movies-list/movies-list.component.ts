@@ -25,7 +25,7 @@ export class MoviesListComponent implements OnInit {
     this.voted.emit(movie);
   }
 
-  onClickRemove(movie: any) {
+  onClickVeto(movie: any) {
     console.log('emit remove');
     this.remove.emit(movie);
   }

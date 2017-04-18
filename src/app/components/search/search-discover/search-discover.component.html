@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-4">
+    <div class="form-group">
+      <label for="">Year</label>
+      <nouislider [config]="rangeConfig" [(ngModel)]="years"></nouislider>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label for="">Genres</label>
+      <ng-select
+          [options]="genres"
+          [multiple]="true"
+          [(ngModel)]="genre"
+          placeholder="Choose genre">
+      </ng-select>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="">Sort</label>
+    <select placeholder="Sorting" [(ngModel)]="sortBy" class="form-control">
+      <option *ngFor="let option of sortOptions" [value]="option.value">{{option.label}}</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <label for="">Keywords</label>
+    <ng-select [multiple]="true"
+            [options]="keywordsArray"
+            [(ngModel)]="keywords"
+            (opened)="populate()"
+            (noOptionsFound)="populate(e)"
+            placeholder="Keywords">
+    </ng-select>
+  </div>
+</div>
+<button class="btn" (click)="discoverMovies()">Submit</button>
+<h2>Suggestions</h2>
+<ngb-pagination *ngIf="moviesList.length" [maxSize]="10" [collectionSize]="maxPages" [(page)]="page" (pageChange)="pageChange()"></ngb-pagination>
+<mv-movies-list [searching]="true" [movies]="moviesList" (voted)="propose($event)"></mv-movies-list>
+<ngb-pagination *ngIf="moviesList.length" [maxSize]="10" [collectionSize]="maxPages" [(page)]="page" (pageChange)="pageChange()"></ngb-pagination>

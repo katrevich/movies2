@@ -3,18 +3,19 @@ import { Http, ConnectionBackend, RequestOptions, RequestOptionsArgs, Response, 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor extends Http {
   private _url: string | Request;
 
-  constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, private _toasts: ToastsManager) {
+  constructor(backend: ConnectionBackend, defaultOptions: RequestOptions, private _toasts: ToastsManager, private _router: Router) {
     super(backend, defaultOptions);
   }
 
   request(url: Request, options?: RequestOptionsArgs): Observable<Response>{
     let token = localStorage.getItem('token');
-    
+
     if (typeof url === 'string') {
       if (!options) {
         options = {headers: new Headers()};
@@ -34,6 +35,11 @@ export class AuthInterceptor extends Http {
   private catchError (self: AuthInterceptor) {
     return (res: Response) => {
       // this._toasts.error('Error: ' + this._url + res.status);
+
+      if(res.status == 498) {
+        this._router.navigate(['/logout']);
+      }
+
       this._toasts.error(`Error:
         ${this._url}
         ${res.status}

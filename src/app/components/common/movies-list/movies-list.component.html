@@ -5,15 +5,14 @@
       <th>Release date</th>
       <th>Name</th>
       <th>Rating (average)</th>
-      <th *ngIf="voting">Vote</th>
       <th *ngIf="voting"></th>
       <th *ngIf="searching">Propose</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let movie of movies">
+    <tr *ngFor="let movie of movies" [ngClass]="{'veto': movie.veto}">
       <td>
-        <a [href]="'https://www.themoviedb.org/movie/' + movie.id">
+        <a [href]="'https://www.themoviedb.org/movie/' + movie.id" target="_blank">
           <img *ngIf="movie.backdrop_path" [src]="'https://image.tmdb.org/t/p/w185' + movie.backdrop_path" alt="">
           <img *ngIf="!movie.backdrop_path && movie.poster_path" [src]="'https://image.tmdb.org/t/p/w185' + movie.poster_path" alt="">
         </a>
@@ -21,10 +20,9 @@
       <td>{{movie.release_date}}</td>
       <td>{{movie.title}}</td>
       <td>{{movie.vote_average}}</td>
-      <td *ngIf="voting">{{movie.votes}}</td>
       <th *ngIf="voting">
-        <button class="btn" (click)="onClick(movie);" *ngIf="_user.isLoggedIn() && !_user.voted">Vote</button>
-        <button class="btn" (click)="onClickRemove(movie);" *ngIf="(_user.isLoggedIn() && !_user.removed) || (_user.isLoggedIn() && movie.username == _user.username) || _user.admin">Remove</button>
+        <button class="btn" (click)="onClick(movie);" *ngIf="_user.isLoggedIn() && !_user.voted && !movie.veto && movie.voters.indexOf(_user.username) < 0">Vote</button>
+        <button class="btn" (click)="onClickVeto(movie);" *ngIf="!_user.vetoed && _user.isLoggedIn()">Veto!</button>
       </th>
       <th *ngIf="searching"><button class="btn" (click)="onClick(movie);" *ngIf="_user.isLoggedIn()">Propose</button></th>
     </tr>

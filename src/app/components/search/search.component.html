@@ -3,36 +3,12 @@
   <ngb-tabset>
     <ngb-tab title="Discover">
       <template ngbTabContent>
-        <div class="row">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="">Year</label>
-              <select class="form-control">
-                <option *ngFor="let i of years" [value]="i">{{i}}</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="">Genres</label>
-              <select class="form-control">
-                <option *ngFor="let genre of genres" [value]="genre.id">{{genre.name}}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <h2>Suggestions</h2>
-        <mv-movies-list [searching]="true"></mv-movies-list>
+        <mv-search-discover></mv-search-discover>
       </template>
     </ngb-tab>
     <ngb-tab title="Search">
       <template ngbTabContent>
-        <div class="form-group">
-          <label for="">Name</label>
-          <input type="text" placeholder="name" class="form-control" [(ngModel)]="name" (keyup.enter)="findMovies()">
-        </div>
-        <h2>Search results for: <b>{{name}}</b></h2>
-        <mv-movies-list [movies]="moviesList" [searching]="true" (voted)="propose($event)"></mv-movies-list>
+        <mv-search-name></mv-search-name>
       </template>
     </ngb-tab>
   </ngb-tabset>

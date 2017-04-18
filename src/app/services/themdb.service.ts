@@ -33,6 +33,7 @@ export interface IMovie {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  veto: boolean;
 }
 
 @Injectable()
@@ -45,18 +46,26 @@ export class Themdb {
 
   constructor(private _http: HttpInterceptor){}
 
-  discoverMovies(name: string){
+  discoverMovies(years: Array<number>, genres: string, page: number = 1, sort_by: string = 'popularity.desc', keywords: string = ''){
     return this._http.get(`${this._apiUrl}/discover/movie`, {
-      params: {...this._dbOptions, name}
+      params: {
+        ...this._dbOptions,
+        "primary_release_date.gte": years[0] + '-01-01',
+        "primary_release_date.lte": years[1] + '-01-01',
+        with_genres: genres,
+        with_keywords: keywords,
+        page,
+        sort_by
+      }
     })
-    .map((res: Response) => res.json().results)
+    .map((res: Response) => res.json())
   }
 
-  findMoviesByName(query: string){
+  findMoviesByName(query: string, page: number = 1, sort_by: string = 'popularity.desc'){
     return this._http.get(`${this._apiUrl}/search/movie`, {
-      params: {...this._dbOptions, query}
+      params: {...this._dbOptions, query, page, sort_by}
     })
-    .map((res: Response) => res.json().results)
+    .map((res: Response) => res.json())
   }
 
   getGenres(){
@@ -64,6 +73,16 @@ export class Themdb {
       params: this._dbOptions
     })
     .map((res: Response) => res.json().genres)
+  }
+
+  getKeywords(query: string = 'a'){
+    return this._http.get(`${this._apiUrl}/search/keyword`, {
+      params: {
+        ...this._dbOptions,
+        query
+      }
+    })
+    .map((res: Response) => res.json().results)
   }
 
   getUpcomingMovies(){

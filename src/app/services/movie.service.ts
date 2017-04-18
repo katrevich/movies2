@@ -20,8 +20,8 @@ export class Movie {
                       .map((res: Response) => res.json())
   }
 
-  voteForMovie(movie: IMovie) {
-    return this._http.put(this.apiUrl + '/movie', { movie })
+  vote(movie: IMovie) {
+    return this._http.put(this.apiUrl + '/movie', { username: this._user.username, movie })
   }
 
   getMovies() {
@@ -29,7 +29,11 @@ export class Movie {
                       .map((res: Response) => res.json())
   }
 
-  removeMovie(movie: IMovie) {
-    return this._http.put(this.apiUrl + '/movies', { movie })
+  // removeMovie(movie: IMovie) {
+  //   return this._http.put(this.apiUrl + '/movies', { movie })
+  // }
+
+  veto(movie: IMovie) {
+    return this._http.patch(this.apiUrl + '/movie', { username: this._user.username, movie });
   }
 }

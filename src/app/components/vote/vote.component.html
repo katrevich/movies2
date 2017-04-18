@@ -1,5 +1,5 @@
 <div class="container">
   <mv-nav></mv-nav>
   <h2>Selected movies</h2>
-  <mv-movies-list [movies]="moviesList" [voting]="true" (voted)="vote($event)" (remove)="remove($event)"></mv-movies-list>
+  <mv-movies-list [movies]="moviesList" [voting]="true" (voted)="vote($event)" (remove)="veto($event)"></mv-movies-list>
 </div>

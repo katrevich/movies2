@@ -29,15 +29,15 @@ export class VoteComponent implements OnInit {
   }
 
   vote(movie: IMovie): void {
-    this._user.voteMade();
-    this._movie.voteForMovie(movie).subscribe(res => {
+    this._user.onVote();
+    this._movie.vote(movie).subscribe(res => {
       this.updateMoviesList();
     })
   }
 
-  remove(movie: IMovie): void {
-    this._user.removeMade();
-    this._movie.removeMovie(movie).subscribe(res => {
+  veto(movie: IMovie): void {
+    this._user.onVeto();
+    this._movie.veto(movie).subscribe(res => {
       this.updateMoviesList();
     })
   }

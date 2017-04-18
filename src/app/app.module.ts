@@ -4,10 +4,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule, XHRBackend, RequestOptions } from '@angular/http';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, Router } from '@angular/router';
 import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastModule, ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { NouisliderModule } from 'ng2-nouislider';
+import { SelectModule } from 'angular2-select';
 
 import { Themdb } from './services/themdb.service';
 import { User } from './services/user.service';
@@ -22,6 +24,9 @@ import { SearchComponent } from './components/search/search.component';
 import { VoteComponent } from './components/vote/vote.component';
 import { NavComponent } from './components/common/nav/nav.component';
 import { MoviesListComponent } from './components/common/movies-list/movies-list.component';
+import { SearchDiscoverComponent } from './components/search/search-discover/search-discover.component';
+import { SearchNameComponent } from './components/search/search-name/search-name.component';
+
 
 const routes: Routes = [
   { path: 'search', component: SearchComponent, canActivate: [LoginGuard] },
@@ -37,7 +42,9 @@ const routes: Routes = [
     SearchComponent,
     VoteComponent,
     NavComponent,
-    MoviesListComponent
+    MoviesListComponent,
+    SearchDiscoverComponent,
+    SearchNameComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +54,8 @@ const routes: Routes = [
     BrowserAnimationsModule,
     ToastModule.forRoot(),
     NgbModule.forRoot(),
+    NouisliderModule,
+    SelectModule,
     RouterModule.forRoot(routes)
   ],
   providers: [
@@ -62,8 +71,8 @@ const routes: Routes = [
     },
     {
         provide: AuthInterceptor,
-        useFactory:(backend: XHRBackend, defaultOptions: RequestOptions, toasts: ToastsManager) =>
-            new AuthInterceptor(backend, defaultOptions, toasts),
+        useFactory:(backend: XHRBackend, defaultOptions: RequestOptions, toasts: ToastsManager, router: Router) =>
+            new AuthInterceptor(backend, defaultOptions, toasts, router),
         deps: [XHRBackend, RequestOptions, ToastsManager]
     }
   ],
