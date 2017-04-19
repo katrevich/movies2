@@ -26,12 +26,18 @@ import { NavComponent } from './components/common/nav/nav.component';
 import { MoviesListComponent } from './components/common/movies-list/movies-list.component';
 import { SearchDiscoverComponent } from './components/search/search-discover/search-discover.component';
 import { SearchNameComponent } from './components/search/search-name/search-name.component';
+import { SearchRecentComponent } from './components/search/search-recent/search-recent.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminGeneralComponent } from './components/admin/admin-general/admin-general.component';
+import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
+import { AdminMoviesComponent } from './components/admin/admin-movies/admin-movies.component';
 
 
 const routes: Routes = [
   { path: 'search', component: SearchComponent, canActivate: [LoginGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'vote', component: VoteComponent },
+  { path: 'admin', component: AdminComponent },
   { path: '', pathMatch: 'full', redirectTo: 'vote' }
 ];
 
@@ -44,7 +50,12 @@ const routes: Routes = [
     NavComponent,
     MoviesListComponent,
     SearchDiscoverComponent,
-    SearchNameComponent
+    SearchNameComponent,
+    SearchRecentComponent,
+    AdminComponent,
+    AdminGeneralComponent,
+    AdminUsersComponent,
+    AdminMoviesComponent
   ],
   imports: [
     BrowserModule,

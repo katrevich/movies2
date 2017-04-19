@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../../../services/user.service';
 import { Movie } from '../../../services/movie.service';
@@ -56,9 +56,9 @@ export class SearchDiscoverComponent implements OnInit {
     options: this.genres
   }
 
-  keywords: Array<number>;
+  keywords: Array<number> = [];
 
-  constructor(private _themdb: Themdb, private _user: User, private _movie: Movie, private _toasts: ToastsManager) { }
+  constructor(private _themdb: Themdb, private _user: User, private _movie: Movie, private _toasts: ToastsManager, private cdRef: ChangeDetectorRef) { }
 
   discoverMovies(page: number): void {
     this._themdb.discoverMovies(this.years, this.genre.join(','), page, this.sortBy, this.keywords.join(',')).subscribe(res => {
@@ -89,6 +89,11 @@ export class SearchDiscoverComponent implements OnInit {
     this._themdb.getGenres().subscribe(res => {
       this.genres = res.map(item => {return {value: item.id, label: item.name}});
     })
+  }
+
+  ngAfterViewChecked() {
+    //explicit change detection to avoid "expression-has-changed-after-it-was-checked-error"
+    this.cdRef.detectChanges();
   }
 
 }

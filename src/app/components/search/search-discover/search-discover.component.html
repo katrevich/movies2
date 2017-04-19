@@ -12,6 +12,7 @@
           [options]="genres"
           [multiple]="true"
           [(ngModel)]="genre"
+          [allowClear]="true"
           placeholder="Choose genre">
       </ng-select>
     </div>
@@ -30,6 +31,7 @@
             [options]="keywordsArray"
             [(ngModel)]="keywords"
             (opened)="populate()"
+            [allowClear]="true"
             (noOptionsFound)="populate(e)"
             placeholder="Keywords">
     </ng-select>
