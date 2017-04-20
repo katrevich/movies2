@@ -7,18 +7,35 @@
   </thead>
   <tbody>
     <tr *ngFor="let user of users" [ngClass]="{'admin': user.admin}">
-      <td>{{user.title}}</td>
+      <td width="100%">{{user.username}}</td>
       <th>
-        <button class="btn btn-primary" (click)="promote(user);">Promote to admin</button>
+        <button class="btn btn-primary" *ngIf="!user.admin" (click)="promote(user);">Promote to admin</button>
         <button class="btn btn-danger" (click)="remove(user);">Remove</button>
       </th>
     </tr>
-    <tr *ngFor="let user of newUsers">
-      <td><input type="text" class="form-control" [(ngModel)]="user.username"></td>
-      <th>
-        <button class="btn btn-danger" (click)="save(user);">Save</button>
-      </th>
-    </tr>
-
   </tbody>
 </table>
+
+<button type="button" class="btn" (click)="open(content)">Add user</button>
+
+<template #content let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title">User</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form novalidate [formGroup]="userForm" (ngSubmit)="onSubmit(userForm)" autocomplete="new-password">
+    <div class="modal-body">
+      <input type="text" class="form-control" formControlName="username" placeholder="name" autocomplete="new-password">
+      <input type="password" class="form-control" formControlName="password" placeholder="password" autocomplete="new-password"> 
+      <div class="error" *ngIf="userForm.get('username').errors?.required && userForm.get('username').touched">Name is required</div>
+      <div class="error" *ngIf="userForm.get('username').errors?.minLength && userForm.get('username').touched">Min lenght is 2 characters</div>
+      <div class="error" *ngIf="userForm.get('password').errors?.required && userForm.get('password').touched">Password is required</div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="submit" name="button" class="btn" [disabled]="userForm.invalid">Save</button>
+    </div>
+  </form>
+</template>

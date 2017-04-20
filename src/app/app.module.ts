@@ -31,11 +31,13 @@ import { AdminComponent } from './components/admin/admin.component';
 import { AdminGeneralComponent } from './components/admin/admin-general/admin-general.component';
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 import { AdminMoviesComponent } from './components/admin/admin-movies/admin-movies.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 
 const routes: Routes = [
   { path: 'search', component: SearchComponent, canActivate: [LoginGuard] },
   { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
   { path: 'vote', component: VoteComponent },
   { path: 'admin', component: AdminComponent },
   { path: '', pathMatch: 'full', redirectTo: 'vote' }
@@ -55,7 +57,8 @@ const routes: Routes = [
     AdminComponent,
     AdminGeneralComponent,
     AdminUsersComponent,
-    AdminMoviesComponent
+    AdminMoviesComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +87,7 @@ const routes: Routes = [
         provide: AuthInterceptor,
         useFactory:(backend: XHRBackend, defaultOptions: RequestOptions, toasts: ToastsManager, router: Router) =>
             new AuthInterceptor(backend, defaultOptions, toasts, router),
-        deps: [XHRBackend, RequestOptions, ToastsManager]
+        deps: [XHRBackend, RequestOptions, ToastsManager, Router]
     }
   ],
   bootstrap: [ AppComponent ]

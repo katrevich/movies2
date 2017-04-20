@@ -24,7 +24,7 @@
     </select>
   </div>
 </div>
-<div class="row">
+<!-- <div class="row">
   <div class="col-md-4">
     <label for="">Keywords</label>
     <ng-select [multiple]="true"
@@ -36,7 +36,7 @@
             placeholder="Keywords">
     </ng-select>
   </div>
-</div>
+</div> -->
 <button class="btn" (click)="discoverMovies()">Submit</button>
 <h2>Suggestions</h2>
 <ngb-pagination *ngIf="moviesList.length" [maxSize]="10" [collectionSize]="maxPages" [(page)]="page" (pageChange)="pageChange()"></ngb-pagination>
