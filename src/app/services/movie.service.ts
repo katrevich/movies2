@@ -9,6 +9,12 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
+export interface MResponse {
+  success: boolean;
+  error?: string;
+  message?: string;
+}
+
 @Injectable()
 export class Movie {
   private apiUrl = 'http://localhost:3001/api';
@@ -29,9 +35,10 @@ export class Movie {
                       .map((res: Response) => res.json())
   }
 
-  // removeMovie(movie: IMovie) {
-  //   return this._http.put(this.apiUrl + '/movies', { movie })
-  // }
+  removeMovie(movie: IMovie) {
+    return this._http.put(this.apiUrl + '/movies', { movie })
+                    .map(res => res.json())
+  }
 
   veto(movie: IMovie) {
     return this._http.patch(this.apiUrl + '/movie', { username: this._user.username, movie });

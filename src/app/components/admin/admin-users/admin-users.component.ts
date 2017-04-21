@@ -14,6 +14,7 @@ export class AdminUsersComponent implements OnInit {
   users: Array<IUser> = [];
   modal: any;
   userForm: FormGroup;
+  loading: boolean = false;
 
   constructor(
     private _user: User,
@@ -61,8 +62,10 @@ export class AdminUsersComponent implements OnInit {
   }
 
   updateUserList(): void {
+    this.loading = true;
     this._user.users.subscribe(res => {
       this.users = res;
+      this.loading = false;
     });
   }
 

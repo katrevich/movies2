@@ -1,12 +1,12 @@
-<table class="table">
+<table class="table" *ngIf="movies.length">
   <thead>
     <tr>
       <th>Poster</th>
       <th>Release date</th>
       <th>Name</th>
       <th>Rating (average)</th>
-      <th *ngIf="voting"></th>
-      <th *ngIf="searching">Propose</th>
+      <th *ngIf="voting && _app.voting"></th>
+      <th *ngIf="searching && _app.voting">Propose</th>
     </tr>
   </thead>
   <tbody>
@@ -20,11 +20,11 @@
       <td>{{movie.release_date}}</td>
       <td>{{movie.title}}</td>
       <td>{{movie.vote_average}}</td>
-      <th *ngIf="voting">
+      <th *ngIf="voting && _app.voting">
         <button class="btn" (click)="onClick(movie);" *ngIf="_user.isLoggedIn() && !_user.voted && !movie.veto && movie.voters.indexOf(_user.username) < 0">Vote</button>
         <button class="btn" (click)="onClickVeto(movie);" *ngIf="!_user.vetoed && _user.isLoggedIn()">Veto!</button>
       </th>
-      <th *ngIf="searching"><button class="btn" (click)="onClick(movie);" *ngIf="_user.isLoggedIn()">Propose</button></th>
+      <th *ngIf="searching && _app.voting"><button class="btn" (click)="onClick(movie);" *ngIf="_user.isLoggedIn()">Propose</button></th>
     </tr>
   </tbody>
 </table>

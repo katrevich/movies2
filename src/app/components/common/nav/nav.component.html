@@ -6,8 +6,8 @@
 
   <div class="collapse navbar-collapse" id="containerNavbar">
     <ul class="navbar-nav mr-auto">
-      <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/search']">Search</a></li>
       <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/vote']">Vote</a></li>
+      <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/search']">Search</a></li>
       <li *ngIf="_user.admin" routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/admin']">admin</a></li>
     </ul>
   </div>

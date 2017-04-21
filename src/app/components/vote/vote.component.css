@@ -1,0 +1,13 @@
+.winner{
+  text-align: center;
+}
+.winner h1{
+  font-size: 10rem;
+  margin: 0 0 3rem;
+}
+.winner .movie-img{
+  margin: 0 0 30px;
+}
+.winner .movie-img img{
+  max-width: 100%;
+}

@@ -1,0 +1,24 @@
+.discover-form{
+  margin: 0 0 20px;
+}
+.selected-keywords{
+  margin: 15px 0 0;
+}
+.selected-keywords .keyword{
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 3px 3px;
+  border-radius: 2px;
+  background: #efefef;
+  color: #000;
+  font-size: 12px;
+  line-height: 1;
+  padding: 5px 10px;
+}
+.selected-keywords .keyword .remove{
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 4px;
+  vertical-align: middle;
+}

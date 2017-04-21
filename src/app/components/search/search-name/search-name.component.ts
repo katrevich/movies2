@@ -11,6 +11,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
   styleUrls: ['./search-name.component.css']
 })
 export class SearchNameComponent implements OnInit {
+  loading: boolean = false;
   name: string;
   moviesList: Array<IMovie> = [];
   page: number = 1;
@@ -36,9 +37,11 @@ export class SearchNameComponent implements OnInit {
   constructor(private _themdb: Themdb, private _user: User, private _movie: Movie, private _toasts: ToastsManager) { }
 
   findMovies(page: number): void {
+    this.loading = true;
     this._themdb.findMoviesByName(this.name, page, this.sortBy).subscribe(res => {
       this.moviesList = res.results;
       this.maxPages = res.total_pages;
+      this.loading = false;
     })
   }
 
@@ -53,6 +56,8 @@ export class SearchNameComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    
+  }
 
 }

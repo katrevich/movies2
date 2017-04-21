@@ -1,0 +1,7 @@
+tr.admin td{
+  background: #fbfbfb;
+}
+
+td.options{
+  white-space: nowrap;
+}

@@ -1,5 +1,23 @@
 <div class="container">
   <mv-nav></mv-nav>
-  <h2>Selected movies</h2>
-  <mv-movies-list [movies]="moviesList" [voting]="true" (voted)="vote($event)" (remove)="veto($event)"></mv-movies-list>
+  <div class="empty-movies" *ngIf="!moviesList.length">
+    no movies yet...
+  </div>
+  <div class="selected-movies" *ngIf="_app.voting && moviesList.length">
+    <h2>Selected movies</h2>
+    <mv-spinner *ngIf="loading"></mv-spinner>
+    <div class="movie-results" *ngIf="!loading">
+      <mv-movies-list [movies]="moviesList" [voting]="true" (voted)="vote($event)" (remove)="veto($event)"></mv-movies-list>
+    </div>
+  </div>
+  <div class="winner" *ngIf="!_app.voting && winner">
+    <h3>And the winner is...</h3>
+    <h1>{{winner.title}}</h1>
+    <div class="movie-img">
+      <img *ngIf="winner.backdrop_path" [src]="'https://image.tmdb.org/t/p/w1000' + winner.backdrop_path" alt="">
+      <img *ngIf="!winner.backdrop_path && winner.poster_path" [src]="'https://image.tmdb.org/t/p/w1000' + winner.poster_path" alt="">
+    </div>
+    <p>Proposed by: <strong>{{winner.username}}</strong></p>
+    <p>People who woted: <strong>{{winner.voters.join(', ')}}</strong></p>
+  </div>
 </div>

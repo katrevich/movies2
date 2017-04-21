@@ -4,6 +4,14 @@ import { User } from '../../../services/user.service';
 import { Movie } from '../../../services/movie.service';
 import { Themdb, IGenre, IMovie } from '../../../services/themdb.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+import { Observable } from 'rxjs/Observable';
+
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'mv-search-discover',
@@ -11,6 +19,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
   styleUrls: ['./search-discover.component.css']
 })
 export class SearchDiscoverComponent implements OnInit {
+  loading: boolean = false;
   genres: Array<IGenre>;
   keywordsArray: Array<Object>;
   moviesList: Array<IMovie> = [];
@@ -22,22 +31,22 @@ export class SearchDiscoverComponent implements OnInit {
   page: number = 1;
   maxPages: number = 1;
   sortOptions: Array<Object> = [
-    {value:'popularity.asc', label:"popularity.asc"},
-    {value:'popularity.desc', label:"popularity.desc"},
-    {value:'release_date.asc', label:"release_date.asc"},
-    {value:'release_date.desc', label:"release_date.desc"},
-    {value:'revenue.asc', label:"revenue.asc"},
-    {value:'revenue.desc', label:"revenue.desc"},
-    {value:'primary_release_date.asc', label:"primary_release_date.asc"},
-    {value:'primary_release_date.desc', label:"primary_release_date.desc"},
-    {value:'original_title.asc', label:"original_title.asc"},
-    {value:'original_title.desc', label:"original_title.desc"},
-    {value:'vote_average.asc', label:"vote_average.asc"},
-    {value:'vote_average.desc', label:"vote_average.desc"},
-    {value:'vote_count.asc', label:"vote_count.asc"},
-    {value:'vote_count.desc', label: "vote_count.desc"}
+    {value:'popularity.asc', label:"Popularity (ascending)"},
+    {value:'popularity.desc', label:"Popularity (descending)"},
+    {value:'release_date.asc', label:"Release date (ascending)"},
+    {value:'release_date.desc', label:"Release date (descending)"},
+    {value:'revenue.asc', label:"Revenue (ascending)"},
+    {value:'revenue.desc', label:"Revenue (descending)"},
+    {value:'primary_release_date.asc', label:"Primary release date (ascending)"},
+    {value:'primary_release_date.desc', label:"Primary release date (descending)"},
+    {value:'original_title.asc', label:"Original title (ascending)"},
+    {value:'original_title.desc', label:"Original title (descending)"},
+    {value:'vote_average.asc', label:"Vote average (ascending)"},
+    {value:'vote_average.desc', label:"Vote average (descending)"},
+    {value:'vote_count.asc', label:"Vote count (ascending)"},
+    {value:'vote_count.desc', label:"Vote count (descending)"}
   ];
-  sortBy: string;
+  sortBy: string = 'popularity.desc';
 
   rangeConfig: any = {
     behaviour: 'drag',
@@ -56,15 +65,45 @@ export class SearchDiscoverComponent implements OnInit {
     options: this.genres
   }
 
-  keywords: Array<number> = [];
+  keywords: Array<Object> = [];
+  cachedKeywords: Array<Object> = [];
 
   constructor(private _themdb: Themdb, private _user: User, private _movie: Movie, private _toasts: ToastsManager, private cdRef: ChangeDetectorRef) { }
 
+  searchKeywords = (text$: Observable<string>) =>
+    text$
+      .debounceTime(100)
+      .distinctUntilChanged()
+      .filter(item => item.length > 2)
+      .switchMap(
+        term => this._themdb.getKeywords(term)
+                            .do((res) => {
+                              this.cachedKeywords = res;
+                            })
+                            .map(res => res.map(item => item.name))
+      )
+
+
   discoverMovies(page: number): void {
-    this._themdb.discoverMovies(this.years, this.genre.join(','), page, this.sortBy, this.keywords.join(',')).subscribe(res => {
+    let ids = this.keywords.map((item: any) => item.id);
+    console.log(ids.join(','));
+    this.loading = true;
+    this._themdb.discoverMovies(this.years, this.genre.join(','), page, this.sortBy, ids.join(',')).subscribe(res => {
       this.moviesList = res.results;
       this.maxPages = res.total_pages;
+      this.loading = false;
     })
+  }
+
+  addKeyword($event, input): void {
+    $event.preventDefault();
+    let keyword: any = this.cachedKeywords.find((item: {name, id}) => item.name === $event.item);
+    this.keywords.push(keyword);
+    input.value = '';
+  }
+
+  removeKeyword(keyword: any): void {
+    this.keywords = this.keywords.filter((item: any) => item.id !== keyword.id);
   }
 
   pageChange(): void {
@@ -79,7 +118,6 @@ export class SearchDiscoverComponent implements OnInit {
   }
 
   populate(e: any): void {
-    console.log(e);
     this._themdb.getKeywords().subscribe(res => {
       this.keywordsArray = res.map(item => {return {value: item.id, label: item.name}});
     })
@@ -92,7 +130,7 @@ export class SearchDiscoverComponent implements OnInit {
   }
 
   ngAfterViewChecked() {
-    //explicit change detection to avoid "expression-has-changed-after-it-was-checked-error"
+    //explicit change detection to avoid "expression-has-changed-after-it-was-checked-error" wtf?
     this.cdRef.detectChanges();
   }
 

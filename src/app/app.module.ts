@@ -17,6 +17,7 @@ import { Movie } from './services/movie.service';
 import { LoginGuard } from './services/login-guard.service';
 import { HttpInterceptor } from './services/http-interceptor.service';
 import { AuthInterceptor } from './services/auth-interceptor.service';
+import { AppState } from './services/app.service';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -32,6 +33,7 @@ import { AdminGeneralComponent } from './components/admin/admin-general/admin-ge
 import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
 import { AdminMoviesComponent } from './components/admin/admin-movies/admin-movies.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { SpinnerComponent } from './components/common/spinner/spinner.component';
 
 
 const routes: Routes = [
@@ -58,7 +60,8 @@ const routes: Routes = [
     AdminGeneralComponent,
     AdminUsersComponent,
     AdminMoviesComponent,
-    LogoutComponent
+    LogoutComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -77,6 +80,7 @@ const routes: Routes = [
     User,
     LoginGuard,
     Movie,
+    AppState,
     {
         provide: HttpInterceptor,
         useFactory:(backend: XHRBackend, defaultOptions: RequestOptions, toasts: ToastsManager) =>

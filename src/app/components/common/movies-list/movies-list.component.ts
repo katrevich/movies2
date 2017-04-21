@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from '../../../services/user.service';
+import { AppState } from '../../../services/app.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -15,7 +16,11 @@ export class MoviesListComponent implements OnInit {
   @Output() remove: EventEmitter<any> = new EventEmitter<any>();
 
 
-  constructor(private _user: User, private _modal: NgbModal) { }
+  constructor(
+    private _user: User,
+    private _modal: NgbModal,
+    private _app: AppState
+  ) { }
 
   ngOnInit() {
 

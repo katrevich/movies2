@@ -1,3 +1,4 @@
 <!-- graphs -->
-<button class="btn">end voting</button>
-<button class="btn">start/restart voting</button>
+<h1><small>app status:</small> {{ _app.voting ? 'Voting in proggress' : 'Voting in ended'}}</h1>
+<button class="btn btn-danger btn-lg" (click)="end()">end voting</button> 
+<button class="btn btn-success btn-lg" (click)="restart()">start/restart voting</button>

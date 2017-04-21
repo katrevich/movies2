@@ -1,2 +1,21 @@
 @import "~nouislider/distribute/nouislider.min.css";
 /*@import "/assets/bootstrap.css";*/
+.row{
+  margin: 0 0 20px;
+}
+
+body{
+  padding: 20px 0;
+}
+
+.tab-content{
+  margin: 20px 0 0;
+}
+
+body h2{
+  margin-bottom: 1.5rem;
+}
+
+body ng-select > div > div.multiple{
+  padding: 3px 10px;
+}

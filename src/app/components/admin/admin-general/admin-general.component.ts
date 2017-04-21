@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppState } from '../../../services/app.service';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'mv-admin-general',
@@ -7,9 +9,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminGeneralComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private _app: AppState,
+    private _toasts: ToastsManager
+  ) { }
+
+  restart(): void {
+    this._app.restartVoting();
+  }
+
+  end(): void {
+    this._app.endVoting()
+              .subscribe(res => {
+                if(res.success) {
+                  this._toasts.success(res.message);
+                  this._app.getState();
+                }
+              })
+  }
 
   ngOnInit() {
+
   }
 
 }
