@@ -34,6 +34,11 @@ import { AdminUsersComponent } from './components/admin/admin-users/admin-users.
 import { AdminMoviesComponent } from './components/admin/admin-movies/admin-movies.component';
 import { LogoutComponent } from './components/logout/logout.component';
 import { SpinnerComponent } from './components/common/spinner/spinner.component';
+import { SearchTopComponent } from './components/search/search-top/search-top.component';
+import { RelatedComponent } from './components/related/related.component';
+
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { ModalComponent } from './components/common/modal/modal.component';
 
 
 const routes: Routes = [
@@ -42,6 +47,7 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent },
   { path: 'vote', component: VoteComponent },
   { path: 'admin', component: AdminComponent },
+  { path: 'related/:id', component: RelatedComponent },
   { path: '', pathMatch: 'full', redirectTo: 'vote' }
 ];
 
@@ -61,7 +67,11 @@ const routes: Routes = [
     AdminUsersComponent,
     AdminMoviesComponent,
     LogoutComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    SearchTopComponent,
+    SafeUrlPipe,
+    ModalComponent,
+    RelatedComponent
   ],
   imports: [
     BrowserModule,

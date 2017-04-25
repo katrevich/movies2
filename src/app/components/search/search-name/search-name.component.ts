@@ -42,6 +42,7 @@ export class SearchNameComponent implements OnInit {
       this.moviesList = res.results;
       this.maxPages = res.total_pages;
       this.loading = false;
+      this._movie.reloadMovies();
     })
   }
 
@@ -57,7 +58,7 @@ export class SearchNameComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
 
 }

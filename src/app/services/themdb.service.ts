@@ -36,6 +36,24 @@ export interface IMovie {
   veto: boolean;
 }
 
+export interface IMovieReview {
+  id: string;
+  author: string;
+  content: string;
+  url: string;
+}
+
+export interface IMovieVideo {
+  id: string;
+  iso_639_1: string;
+  iso_3166_1: string;
+  key: string;
+  name: string;
+  site: string;
+  size: number;
+  type: string;
+}
+
 @Injectable()
 export class Themdb {
   private _dbOptions: IThemdbOptions = <IThemdbOptions>{
@@ -90,5 +108,40 @@ export class Themdb {
       params: this._dbOptions
     })
     .map((res: Response) => res.json().results)
+  }
+
+  getTopRated(page: number){
+    return this._http.get(`${this._apiUrl}/movie/top_rated`, {
+      params: {...this._dbOptions, page}
+    })
+    .map((res: Response) => res.json())
+  }
+
+  getVideos(id: string){
+    return this._http.get(`${this._apiUrl}/movie/${id}/videos`, {
+      params: this._dbOptions
+    })
+    .map((res: Response) => res.json().results)
+  }
+
+  getReviews(id: string){
+    return this._http.get(`${this._apiUrl}/movie/${id}/reviews`, {
+      params: this._dbOptions
+    })
+    .map((res: Response) => res.json().results)
+  }
+
+  getRelated(id: string, page: number){
+    return this._http.get(`${this._apiUrl}/movie/${id}/similar`, {
+      params: {...this._dbOptions, page}
+    })
+    .map((res: Response) => res.json())
+  }
+
+  getMovieDetails(id: string){
+    return this._http.get(`${this._apiUrl}/movie/${id}`, {
+      params: this._dbOptions
+    })
+    .map((res: Response) => res.json())
   }
 }

@@ -5,12 +5,13 @@ import { Movie } from '../../../services/movie.service';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
-  selector: 'mv-search-recent',
-  templateUrl: './search-recent.component.html',
-  styleUrls: ['./search-recent.component.css']
+  selector: 'mv-search-top',
+  templateUrl: './search-top.component.html',
+  styleUrls: ['./search-top.component.css']
 })
-export class SearchRecentComponent implements OnInit {
+export class SearchTopComponent implements OnInit {
   page: number = 1;
+  maxPages: number = 1;
   moviesList: Array<IMovie> = [];
 
   constructor(
@@ -27,12 +28,21 @@ export class SearchRecentComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this._themdb.getUpcomingMovies()
+  getMovies(page: number): void {
+    this._themdb.getTopRated(page)
                 .subscribe(res => {
-                  this.moviesList = res;
+                  this.moviesList = res.results;
+                  this.maxPages = res.total_pages;
                   this._movie.reloadMovies();
                 })
+  }
+
+  ngOnInit() {
+    this.getMovies(this.page);
+  }
+
+  pageChange(): void {
+    this.getMovies(this.page);
   }
 
 }

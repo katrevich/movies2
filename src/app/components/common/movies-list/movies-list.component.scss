@@ -1,0 +1,27 @@
+.veto{
+  opacity: .5;
+}
+.movie-name{
+  font-size: 18px;
+}
+.movie-overview{
+  font-size: 12px;
+}
+
+.movie-reviews{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li{
+    margin: 0 0 15px;
+    font-size: 12px;
+  }
+
+  .review-author{
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin: 0 0 5px;
+  }
+}

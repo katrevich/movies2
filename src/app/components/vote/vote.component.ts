@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../services/user.service';
 import { IMovie } from '../../services/themdb.service';
-import { Movie } from '../../services/movie.service';
+import { Movie, IMovieVoted } from '../../services/movie.service';
 import { AppState } from '../../services/app.service';
-
-interface IMovieVoted extends IMovie {
-  username: string;
-  voters: Array<string>;
-}
 
 @Component({
   templateUrl: './vote.component.html',
@@ -28,6 +23,9 @@ export class VoteComponent implements OnInit {
     this.updateMoviesList();
   }
 
+  /**
+  * Reload list of movies proposed for viewing.
+  */
   updateMoviesList(): void {
     this.loading = true;
     this._movie.getMovies().subscribe(res => {
@@ -39,6 +37,10 @@ export class VoteComponent implements OnInit {
     })
   }
 
+  /**
+  * Voting for a movie. Adding to the arrey of users voted for a movie.
+  * @param {movie} IMovieVoted
+  */
   vote(movie: IMovie): void {
     this._user.onVote();
     this._movie.vote(movie).subscribe(res => {
@@ -46,6 +48,11 @@ export class VoteComponent implements OnInit {
     })
   }
 
+  /**
+  * Vetoing a movie (every user has one right to veto).
+  * Vetoed movie is not removed, but can't be voted for.
+  * @param {movie} IMovieVoted
+  */
   veto(movie: IMovie): void {
     this._user.onVeto();
     this._movie.veto(movie).subscribe(res => {
@@ -53,6 +60,12 @@ export class VoteComponent implements OnInit {
     })
   }
 
+  /**
+  * Deciding on the winner, currently it's the one that has max amount of votes
+  * and max user rating
+  * @param {movies} Array<IMovieVoted>
+  * @returns {movie} IMovieVoted
+  */
   getWinner(movies: Array<IMovieVoted>): any {
     let maxItem = this.moviesList[0],
         maxRating,

@@ -27,6 +27,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
+      <label for="">Keywords</label>
       <input type="text" class="form-control" #input (selectItem)="addKeyword($event, input)" [ngbTypeahead]="searchKeywords">
 
       <div class="selected-keywords">

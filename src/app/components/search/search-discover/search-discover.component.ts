@@ -74,7 +74,7 @@ export class SearchDiscoverComponent implements OnInit {
     text$
       .debounceTime(100)
       .distinctUntilChanged()
-      .filter(item => item.length > 2)
+      .filter(item => item.length >= 2)
       .switchMap(
         term => this._themdb.getKeywords(term)
                             .do((res) => {
@@ -84,14 +84,18 @@ export class SearchDiscoverComponent implements OnInit {
       )
 
 
+  /**
+  * Getting movies according to parameters
+  * @param {page} number
+  */
   discoverMovies(page: number): void {
     let ids = this.keywords.map((item: any) => item.id);
-    console.log(ids.join(','));
     this.loading = true;
     this._themdb.discoverMovies(this.years, this.genre.join(','), page, this.sortBy, ids.join(',')).subscribe(res => {
       this.moviesList = res.results;
       this.maxPages = res.total_pages;
       this.loading = false;
+      this._movie.reloadMovies();
     })
   }
 

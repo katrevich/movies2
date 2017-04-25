@@ -41,7 +41,6 @@ export class AuthInterceptor extends Http {
       }
 
       this._toasts.error(`Error:
-        ${this._url}
         ${res.status}
         ${res.json().error}
         `);
