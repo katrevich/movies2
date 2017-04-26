@@ -30,7 +30,7 @@ export class RelatedComponent implements OnInit {
 
   findMovies(page: number): void {
     this.loading = true;
-    this._themdb.getRelated(this.id.toString(), page).subscribe(res => {
+    this._themdb.getRelated(this.id, page).subscribe(res => {
       this.moviesList = res.results;
       this.maxPages = res.total_pages;
       this.loading = false;
@@ -54,7 +54,7 @@ export class RelatedComponent implements OnInit {
     })
     this._aRoute.params.subscribe(params => {
       this.id = params['id'];
-      this._themdb.getMovieDetails(this.id.toString())
+      this._themdb.getMovieDetails(this.id)
                   .subscribe(res => {
                     this.movie = res;
                   })

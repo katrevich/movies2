@@ -20,7 +20,6 @@ export class ModalComponent implements OnInit {
   }
 
   open(){
-    console.log(this.windowClass);
     return this._modal.open(this.content, { windowClass: this.windowClass });
   }
 

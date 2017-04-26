@@ -117,28 +117,28 @@ export class Themdb {
     .map((res: Response) => res.json())
   }
 
-  getVideos(id: string){
+  getVideos(id: number){
     return this._http.get(`${this._apiUrl}/movie/${id}/videos`, {
       params: this._dbOptions
     })
     .map((res: Response) => res.json().results)
   }
 
-  getReviews(id: string){
+  getReviews(id: number){
     return this._http.get(`${this._apiUrl}/movie/${id}/reviews`, {
       params: this._dbOptions
     })
     .map((res: Response) => res.json().results)
   }
 
-  getRelated(id: string, page: number){
+  getRelated(id: number, page: number){
     return this._http.get(`${this._apiUrl}/movie/${id}/similar`, {
       params: {...this._dbOptions, page}
     })
     .map((res: Response) => res.json())
   }
 
-  getMovieDetails(id: string){
+  getMovieDetails(id: number){
     return this._http.get(`${this._apiUrl}/movie/${id}`, {
       params: this._dbOptions
     })

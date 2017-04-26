@@ -46,17 +46,17 @@ export class MoviesListComponent implements OnInit {
   }
 
   openVideos(modal, movie: IMovieVoted): void {
-    this._themdb.getVideos(movie.id.toString())
+    this._themdb.getVideos(movie.id)
                 .subscribe(res => {
                   movie.videos = res;
                   modal.open();
                 })
   }
+
   openReviews(modal, movie: IMovieVoted): void {
-    this._themdb.getReviews(movie.id.toString())
+    this._themdb.getReviews(movie.id)
                 .subscribe(res => {
                   movie.reviews = res;
-                  console.log(res);
                   modal.open();
                 })
   }
