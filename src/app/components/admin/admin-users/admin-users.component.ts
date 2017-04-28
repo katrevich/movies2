@@ -26,25 +26,14 @@ export class AdminUsersComponent implements OnInit {
     this.modal = this._modal.open(content);
   }
 
-  promote(user: IUser): void {
-    if(this._user.admin === true) {
-      user.admin = true;
-      this._user.updateUser(user)
-                .subscribe(res => {
-                  if(res.success) {
-                    this._toasts.success(res.message);
-                    this.updateUserList();
-                  }
-                })
-    }
-  }
-
   remove(user: IUser): void {
     this._user.removeUser(user)
               .subscribe(res => {
                 if(res.success) {
                   this._toasts.success(res.message);
-                  this.updateUserList();
+                  // this.updateUserList();
+                  let id = this.users.findIndex((item, i) => item.username === user.username);
+                  this.users.splice(id, 1);
                 }
               })
   }

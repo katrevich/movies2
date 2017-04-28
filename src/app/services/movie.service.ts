@@ -62,6 +62,7 @@ export class Movie {
   }
 
   veto(movie: IMovie) {
+    this._user.veto();
     return this._http.patch(this.apiUrl + '/movie', { username: this._user.username, movie });
   }
 }

@@ -42,7 +42,7 @@ import { ModalComponent } from './components/common/modal/modal.component';
 
 
 const routes: Routes = [
-  { path: 'search', component: SearchComponent, canActivate: [LoginGuard] },
+  { path: 'propose', component: SearchComponent, canActivate: [LoginGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'vote', component: VoteComponent },

@@ -1,6 +1,3 @@
-.veto{
-  opacity: .5;
-}
 .movie-name{
   font-size: 18px;
 }
@@ -23,5 +20,120 @@
     font-weight: bold;
     display: block;
     margin: 0 0 5px;
+  }
+}
+
+
+.movie-cards{
+  display: flex;
+  margin: 0 -1%;
+  align-items: stretch;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .card{
+    margin: 0 1% 20px;
+    width: 31%;
+  }
+}
+
+.card{
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+
+  .card-img-top{
+    max-width: 100%;
+  }
+
+  .card-title{
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 10%;
+    line-height: 35px;
+
+    span{
+      background: rgba(255,255,255, .9);
+      padding: 0px 0 3px;
+      box-shadow: 8px 0 0 rgba(255,255,255, .9), -8px 0 0 rgba(255,255,255, .9);
+      line-height: 1;
+    }
+  }
+
+  .card-block{
+    padding: 0;
+  }
+
+  .btn{
+    cursor: pointer;
+  }
+
+  .card-options{
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    padding: 10px 10px 7px;
+    z-index: 2;
+    transform: translateY(-100%);
+    opacity: 0;
+    background: rgba(255,255,255, .9);
+    border-bottom: 1px solid #fbfbfb;
+    transition: opacity .2s ease, transform .2s ease;
+    font-size: 0;
+
+    .btn{
+      font-size: 12px;
+      margin: 0 3px 3px 0;
+    }
+  }
+
+  .card-buttons{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 10px;
+    background: rgba(255,255,255, .9);
+    border-top: 1px solid #fbfbfb;
+    z-index: 2;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: opacity .2s ease, transform .2s ease;
+  }
+
+  &:hover{
+
+    .card-options,
+    .card-buttons{
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  &.veto{
+    background: #ddd;
+
+    &:before{
+      content: '';
+      position: absolute;
+      background: url(/assets/veto-stamp.png) 50% 50% no-repeat;
+      background-size: cover;
+      left: 0;
+      right: 0;
+      top: 50%;
+      padding-top: 60%;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    .card-buttons{
+      display: none;
+    }
+
+    .card-img-top{
+      opacity: .6;
+    }
   }
 }

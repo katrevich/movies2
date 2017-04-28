@@ -2,12 +2,12 @@
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#containerNavbar" aria-controls="containerNavbar" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="/">Movies2</a>
+  <a class="navbar-brand" [routerLink]="['/vote']">Movies2</a>
 
   <div class="collapse navbar-collapse" id="containerNavbar">
     <ul class="navbar-nav mr-auto">
       <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/vote']">Vote</a></li>
-      <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/search']">Search</a></li>
+      <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/propose']">Propose</a></li>
       <li *ngIf="_user.admin" routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/admin']">admin</a></li>
     </ul>
   </div>

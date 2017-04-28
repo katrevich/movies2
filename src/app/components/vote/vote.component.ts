@@ -6,12 +6,13 @@ import { AppState } from '../../services/app.service';
 
 @Component({
   templateUrl: './vote.component.html',
-  styleUrls: ['./vote.component.css']
+  styleUrls: ['./vote.component.scss']
 })
 export class VoteComponent implements OnInit {
   moviesList: Array<IMovieVoted> = [];
   winner: any;
   loading: boolean = false;
+  hideMy: boolean = false;
 
   constructor(
     private _user: User,
@@ -42,9 +43,8 @@ export class VoteComponent implements OnInit {
   * @param {movie} IMovieVoted
   */
   vote(movie: IMovie): void {
-    this._user.onVote();
     this._movie.vote(movie).subscribe(res => {
-      this.updateMoviesList();
+      // this.updateMoviesList();
     })
   }
 
@@ -54,9 +54,8 @@ export class VoteComponent implements OnInit {
   * @param {movie} IMovieVoted
   */
   veto(movie: IMovie): void {
-    this._user.onVeto();
     this._movie.veto(movie).subscribe(res => {
-      this.updateMoviesList();
+      // this.updateMoviesList();
     })
   }
 

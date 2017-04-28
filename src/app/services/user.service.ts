@@ -18,23 +18,23 @@ export interface IUser {
 
 @Injectable()
 export class User {
-  private authUrl = 'http://localhost:3001/api/login';
   private apiUrl = 'http://localhost:3001/api';
+  private user: IUser = <IUser>{};
 
   get username(): string {
-    return localStorage.getItem('username');
+    return this.user.username;
   }
 
   get vetoed(): boolean {
-    return JSON.parse(localStorage.getItem('vetoed'));
+    return this.user.vetoed;
   }
 
   get token(): string {
-    return JSON.parse(localStorage.getItem('token'));
+    return localStorage.getItem('token');
   }
 
   get admin(): boolean {
-    return JSON.parse(localStorage.getItem('admin'));
+    return this.user.admin;
   }
 
   get users(): Observable<any> {
@@ -42,50 +42,36 @@ export class User {
                       .map((res: Response) => res.json())
   }
 
-  // get users(): Array<string> {
-  //   return
-  // }
+  constructor(private _http: HttpInterceptor, private _ahttp: AuthInterceptor, private _router: Router, private _toasts: ToastsManager){
+    let token = localStorage.getItem('token');
+    if(token) {
+      this._ahttp.get(`${this.apiUrl}/user`)
+      .map((res: Response) => res.json())
+      .subscribe(user => {
+        this.setUser(user);
+      })
+    }
 
-  constructor(private _http: HttpInterceptor, private _ahttp: AuthInterceptor, private _router: Router, private _toasts: ToastsManager){ }
+  }
 
   login(username: string, password: string): void {
     this._http
-        .post(this.authUrl, { username, password })
+        .post(`${this.apiUrl}/login`, { username, password })
         .subscribe((res: Response) => {
             if(res.json().success){
               this.setUser(res.json());
-              this._router.navigate(['/search']);
+              this._router.navigate(['/propose']);
             }
           }
         )
   }
 
   veto(): void {
-    this._http.put(this.apiUrl + 'user', { username: this.username })
-              .subscribe((res: Response) => {
-                if(res.json().success){
-                  this.setUser(res.json().user);
-                  this._toasts.success(res.json().message);
-                }
-              })
-  }
-
-  onVote() {
-    //TODO: update user in db
-    console.log('vote made');
-  }
-
-  onVeto() {
-    //TODO: update user in db
-    console.log('veto made');
-    localStorage.setItem('vetoed', "true");
+    this.user.vetoed = true;
   }
 
   logout(): void {
     localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('admin');
-    localStorage.removeItem('vetoed');
     this._router.navigate(['/']);
   }
 
@@ -93,11 +79,11 @@ export class User {
     return !!localStorage.getItem('token');
   }
 
-  setUser(user: IUser): void {
+  setUser(user): void {
+    this.user.username = user.username;
+    this.user.vetoed = user.vetoed;
+    this.user.admin = user.admin;
     localStorage.setItem('token', user.token);
-    localStorage.setItem('username', user.username);
-    localStorage.setItem('vetoed', JSON.stringify(user.vetoed));
-    localStorage.setItem('admin', JSON.stringify(user.admin));
   }
 
   removeUser(user: IUser): Observable<any> {

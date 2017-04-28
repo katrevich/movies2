@@ -15,6 +15,7 @@ export class MoviesListComponent implements OnInit {
   @Input() movies: Array<any> = [];
   @Input() voting: boolean = false;
   @Input() searching: boolean = false;
+  @Input() hideMy: boolean = false;
   @Output() voted: EventEmitter<any> = new EventEmitter<any>();
   @Output() remove: EventEmitter<any> = new EventEmitter<any>();
 
@@ -29,11 +30,13 @@ export class MoviesListComponent implements OnInit {
   ngOnInit() { }
 
   onClick(movie: any, btn) {
-    btn.style="visibility: hidden;"
+    btn.style="visibility: hidden;";
     this.voted.emit(movie);
   }
 
-  onClickVeto(movie: any) {
+  onClickVeto(movie: any, btn) {
+    btn.style="visibility: hidden;";
+    movie.veto = true;
     this.remove.emit(movie);
   }
 

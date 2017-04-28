@@ -10,8 +10,7 @@
     <tr *ngFor="let user of users" [ngClass]="{'admin': user.admin}">
       <td width="100%">{{user.username}}</td>
       <td class="options">
-        <button class="btn btn-primary" *ngIf="!user.admin" (click)="promote(user);">Promote to admin</button>
-        <button class="btn btn-danger" (click)="remove(user);">Remove</button>
+        <button class="btn btn-danger" (click)="remove(user);" *ngIf="!user.admin">Remove</button>
       </td>
     </tr>
   </tbody>

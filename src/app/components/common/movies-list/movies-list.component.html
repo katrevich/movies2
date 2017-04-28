@@ -1,39 +1,32 @@
-<table class="table" *ngIf="movies.length">
-  <thead>
-    <tr>
-      <th>Poster</th>
-      <th>Release date</th>
-      <th>Name</th>
-      <th>Rating (average)</th>
-      <th *ngIf="voting && _app.voting"></th>
-      <th *ngIf="searching && _app.voting">Propose</th>
-    </tr>
-  </thead>
-  <tbody>
-    <template ngFor let-movie [ngForOf]="movies">
-      <tr [ngClass]="{'veto': movie.veto}" data-id="{{movie.id}}">
-        <td rowspan="2">
-          <a [href]="'https://www.themoviedb.org/movie/' + movie.id" target="_blank">
-            <img *ngIf="movie.backdrop_path" [src]="'https://image.tmdb.org/t/p/w185' + movie.backdrop_path" alt="">
-            <img *ngIf="!movie.backdrop_path && movie.poster_path" [src]="'https://image.tmdb.org/t/p/w185' + movie.poster_path" alt="">
-          </a>
-        </td>
-        <td>{{movie.release_date}}</td>
-        <td class="movie-name"><strong>{{movie.title}}</strong></td>
-        <td>{{movie.vote_average}}</td>
-        <td *ngIf="voting && _app.voting">
-          <button class="btn" (click)="onClick(movie);" *ngIf="_user.isLoggedIn() && !_user.voted && !movie.veto && movie.voters.indexOf(_user.username) < 0">Vote</button>
-          <button class="btn" (click)="onClickVeto(movie);" *ngIf="!_user.vetoed && _user.isLoggedIn()">Veto!</button>
-        </td>
-        <th *ngIf="searching && _app.voting"><button class="btn" #proposeBtn (click)="onClick(movie, proposeBtn);" *ngIf="_user.isLoggedIn() && proposable(movie.id)">Propose</button></th>
-      </tr>
-      <tr>
-        <td colspan="4">
-          <button class="btn btn-sm btn-success" (click)="open(description)">Details</button>
-          <button class="btn btn-sm btn-success" (click)="openVideos(videos, movie)">Videos</button>
-          <button class="btn btn-sm btn-success" (click)="openReviews(reviews, movie)">Reviews</button>
-          <a class="btn btn-sm btn-success" [routerLink]="['/related', movie.id]">Related movies</a>
-        </td>
+<div class="movie-cards">
+  <template ngFor let-movie [ngForOf]="movies">
+    <div class="card" [ngClass]="{'veto': movie.veto}" data-id="{{movie.id}}" *ngIf="!hideMy || (movie.username !== _user.username && !hidemy)">
+      <a [href]="'https://www.themoviedb.org/movie/' + movie.id" target="_blank">
+        <img class="card-img-top" *ngIf="movie.poster_path" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" alt="">
+        <img class="card-img-top" *ngIf="!movie.poster_path && movie.backdrop_path" [src]="'https://image.tmdb.org/t/p/w500' + movie.backdrop_path" alt="">
+      </a>
+      <h4 class="card-title"><span [innerHTML]="movie.title"></span></h4>
+      <div class="card-block">
+        <div class="card-buttons" *ngIf="voting && _app.voting">
+          <button class="btn btn-md btn-success"
+          (click)="onClick(movie, voteBtn);"
+          #voteBtn
+          *ngIf="_user.isLoggedIn() && !_user.voted && !movie.veto && movie.voters.indexOf(_user.username) < 0">Vote</button>
+          <button class="btn btn-md btn-danger"
+          (click)="onClickVeto(movie, vetobtn);"
+          #vetobtn
+          *ngIf="!_user.vetoed && _user.isLoggedIn() && !movie.veto">Veto!</button>
+        </div>
+        <div class="card-buttons" *ngIf="searching && _app.voting">
+          <button class="btn btn-md btn-success" #proposeBtn (click)="onClick(movie, proposeBtn);" *ngIf="_user.isLoggedIn() && proposable(movie.id)">Propose</button>
+          <span class="movie-proposed" *ngIf="!proposable(movie.id)">Movie already proposed</span>
+        </div>
+      </div>
+      <div class="card-options">
+        <button class="btn btn-sm btn-success" (click)="open(description)">Details</button>
+        <button class="btn btn-sm btn-success" (click)="openVideos(videos, movie)">Videos</button>
+        <button class="btn btn-sm btn-success" (click)="openReviews(reviews, movie)">Reviews</button>
+        <a class="btn btn-sm btn-success" [routerLink]="['/related', movie.id]">Related movies</a>
         <mv-modal #description [title]="movie.title"><p>{{movie.overview}}</p></mv-modal>
         <mv-modal #videos [title]="movie.title" [windowClass]="'videos-modal'">
           <div class="embed-responsive embed-responsive-16by9" *ngFor="let video of movie.videos">
@@ -49,7 +42,7 @@
           </ul>
           <span *ngIf="!movie.reviews?.length">No reviews yet  :(</span>
         </mv-modal>
-      </tr>
-    </template>
-  </tbody>
-</table>
+      </div>
+    </div>
+  </template>
+</div>

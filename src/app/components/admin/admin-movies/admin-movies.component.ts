@@ -26,15 +26,16 @@ export class AdminMoviesComponent implements OnInit {
   }
 
   remove(movie: IMovie): void {
-    //TODO: remove item from view without reloading the whole list 
+    //TODO: remove item from view without reloading the whole list
     this._movie.removeMovie(movie)
               .subscribe((res: MResponse) => {
                 if(res.success) {
                   this._toasts.success(res.message);
+                  let id = this.moviesList.findIndex((item, i) => item.title === movie.title);
+                  this.moviesList.splice(id, 1);
                 } else {
                   this._toasts.success(res.error);
                 }
-                this.updateMoviesList();
               })
   }
 
