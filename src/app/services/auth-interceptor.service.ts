@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Http, ConnectionBackend, RequestOptions, RequestOptionsArgs, Response, Request , Headers } from '@angular/http';
+import { Http, ConnectionBackend, RequestOptions, RequestOptionsArgs, Response, Request , Headers, XHRBackend } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 import { Router } from '@angular/router';
+
+export function AuthInterceptorFactory(backend: XHRBackend, defaultOptions: RequestOptions, toasts: ToastsManager, router: Router) {
+  return new AuthInterceptor(backend, defaultOptions, toasts, router)
+}
 
 @Injectable()
 export class AuthInterceptor extends Http {

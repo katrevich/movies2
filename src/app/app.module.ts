@@ -15,8 +15,8 @@ import { Themdb } from './services/themdb.service';
 import { User } from './services/user.service';
 import { Movie } from './services/movie.service';
 import { LoginGuard } from './services/login-guard.service';
-import { HttpInterceptor } from './services/http-interceptor.service';
-import { AuthInterceptor } from './services/auth-interceptor.service';
+import { HttpInterceptor, HttpInterceptorFactory } from './services/http-interceptor.service';
+import { AuthInterceptor, AuthInterceptorFactory } from './services/auth-interceptor.service';
 import { AppState } from './services/app.service';
 
 import { AppComponent } from './app.component';
@@ -93,14 +93,12 @@ const routes: Routes = [
     AppState,
     {
         provide: HttpInterceptor,
-        useFactory:(backend: XHRBackend, defaultOptions: RequestOptions, toasts: ToastsManager) =>
-            new HttpInterceptor(backend, defaultOptions, toasts),
+        useFactory: HttpInterceptorFactory,
         deps: [XHRBackend, RequestOptions, ToastsManager]
     },
     {
         provide: AuthInterceptor,
-        useFactory:(backend: XHRBackend, defaultOptions: RequestOptions, toasts: ToastsManager, router: Router) =>
-            new AuthInterceptor(backend, defaultOptions, toasts, router),
+        useFactory: AuthInterceptorFactory,
         deps: [XHRBackend, RequestOptions, ToastsManager, Router]
     }
   ],

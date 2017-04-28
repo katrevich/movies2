@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Http, ConnectionBackend, RequestOptions, RequestOptionsArgs, Response, Request , Headers } from '@angular/http';
+import { Http, ConnectionBackend, RequestOptions, RequestOptionsArgs, Response, Request , Headers, XHRBackend } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
+
+export function HttpInterceptorFactory(backend: XHRBackend, defaultOptions: RequestOptions, toasts: ToastsManager) {
+  return new HttpInterceptor(backend, defaultOptions, toasts)
+}
 
 @Injectable()
 export class HttpInterceptor extends Http {
