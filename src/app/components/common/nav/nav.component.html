@@ -8,15 +8,15 @@
     <ul class="navbar-nav mr-auto">
       <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/vote']">Vote</a></li>
       <li routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/propose']">Propose</a></li>
-      <li *ngIf="_user.admin" routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/admin']">admin</a></li>
+      <li *ngIf="user.admin" routerLinkActive="active" class="nav-item"><a class="nav-link" [routerLink]="['/admin']">admin</a></li>
     </ul>
   </div>
 
-  <div class="user-block" *ngIf="_user.isLoggedIn()">
-    {{_user.username}}
-    <button class="btn" (click)="_user.logout()">Logout</button>
+  <div class="user-block" *ngIf="user.isLoggedIn()">
+    {{user.username}}
+    <button class="btn" (click)="user.logout()">Logout</button>
   </div>
-  <div class="user-block" *ngIf="!_user.isLoggedIn()">
+  <div class="user-block" *ngIf="!user.isLoggedIn()">
     <button class="btn" [routerLink]="['/login']">login</button>
   </div>
 </nav>

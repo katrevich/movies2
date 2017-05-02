@@ -12,32 +12,46 @@ import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-
   styleUrls: ['./movies-list.component.scss']
 })
 export class MoviesListComponent implements OnInit {
-  @Input() movies: Array<any> = [];
+  @Input() movies: Array<IMovieVoted> = [];
   @Input() voting: boolean = false;
   @Input() searching: boolean = false;
   @Input() hideMy: boolean = false;
   @Output() voted: EventEmitter<any> = new EventEmitter<any>();
-  @Output() remove: EventEmitter<any> = new EventEmitter<any>();
+  @Output() veto: EventEmitter<any> = new EventEmitter<any>();
+  @Output() propose: EventEmitter<any> = new EventEmitter<any>();
+  public modalMovie:IMovieVoted = <IMovieVoted>{};
+  public relatedMovies: Array<IMovieVoted> = [];
+
+  @ViewChild('videos') videosModal: ModalComponent;
+  @ViewChild('reviews') reviewsModal: ModalComponent;
+  @ViewChild('related') relatedModal: ModalComponent;
 
   constructor(
     private _user: User,
     private _modal: NgbModal,
     private _app: AppState,
     private _themdb: Themdb,
-    private _movie: Movie
+    public movie: Movie
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
 
-  onClick(movie: any, btn) {
-    btn.style="visibility: hidden;";
+  }
+
+  emitVote(movie: any, btn): void {
+    btn.className="hidden";
     this.voted.emit(movie);
   }
 
-  onClickVeto(movie: any, btn) {
-    btn.style="visibility: hidden;";
+  emitPropose(movie: any, btn): void {
+    btn.className="hidden";
+    this.propose.emit(movie);
+  }
+
+  emitVeto(movie: any, btn): void {
+    btn.className="hidden";
     movie.veto = true;
-    this.remove.emit(movie);
+    this.veto.emit(movie);
   }
 
   open(modal): void {
@@ -45,24 +59,32 @@ export class MoviesListComponent implements OnInit {
   }
 
   proposable(id: number): boolean{
-    return !this._movie.movies.find(item => item.id === id)
+    return !this.movie.movies.find(item => item.id === id)
   }
 
-  openVideos(modal, movie: IMovieVoted): void {
+  openVideos(movie: IMovieVoted): void {
+    this.modalMovie.title = movie.title;
     this._themdb.getVideos(movie.id)
                 .subscribe(res => {
-                  movie.videos = res;
-                  modal.open();
+                  this.modalMovie.videos = res;
+                  this.videosModal.open();
                 })
   }
 
-  openReviews(modal, movie: IMovieVoted): void {
+  openReviews(movie: IMovieVoted): void {
+    this.modalMovie.title = movie.title;
     this._themdb.getReviews(movie.id)
                 .subscribe(res => {
-                  movie.reviews = res;
-                  modal.open();
+                  this.modalMovie.reviews = res;
+                  this.reviewsModal.open();
                 })
   }
 
-
+  openRelated(movie: IMovieVoted): void {
+    this.modalMovie.title = movie.title;
+    this._themdb.getRelated(movie.id, 1).subscribe(res => {
+      this.relatedMovies = res.results;
+      this.relatedModal.open();
+    })
+  }
 }

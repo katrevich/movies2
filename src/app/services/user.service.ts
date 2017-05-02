@@ -68,6 +68,9 @@ export class User {
 
   veto(): void {
     this.user.vetoed = true;
+    this.updateUser(this.user).subscribe(res => {
+      
+    });
   }
 
   logout(): void {

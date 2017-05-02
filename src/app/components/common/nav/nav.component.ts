@@ -8,13 +8,8 @@ import { User } from '../../../services/user.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private _user: User) { }
+  constructor(public user: User) { }
 
   ngOnInit() {
   }
-
-  // logout(): void{
-  //   this._user.logout();
-  // }
-
 }

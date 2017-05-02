@@ -7,10 +7,10 @@ import { User } from '../../services/user.service';
 })
 export class LogoutComponent implements OnInit {
 
-  constructor(private _user: User, private _router: Router) { }
+  constructor(public user: User, private _router: Router) { }
 
   ngOnInit() {
-    this._user.logout();
+    this.user.logout();
     this._router.navigate(['/login']);
   }
 

@@ -38,6 +38,15 @@ export class VoteComponent implements OnInit {
     })
   }
 
+  propose(movie: IMovie): void {
+    console.log('propose');
+    let username: string = this._user.username;
+    this._movie.addMovie(movie).subscribe(res => {
+      let newMovie: IMovieVoted = {...movie, username, voters: [username]};
+      this.moviesList.push(newMovie);
+    });
+  }
+
   /**
   * Voting for a movie. Adding to the arrey of users voted for a movie.
   * @param {movie} IMovieVoted

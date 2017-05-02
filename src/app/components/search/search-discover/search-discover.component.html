@@ -42,6 +42,6 @@
 <h2 *ngIf="moviesList.length">Suggestions</h2>
 <div class="movie-results" *ngIf="!loading">
   <ngb-pagination *ngIf="moviesList.length" [maxSize]="10" [collectionSize]="maxPages" [(page)]="page" (pageChange)="pageChange()"></ngb-pagination>
-  <mv-movies-list [searching]="true" [movies]="moviesList" (voted)="propose($event)"></mv-movies-list>
+  <mv-movies-list [searching]="true" [movies]="moviesList" (propose)="propose($event)"></mv-movies-list>
   <ngb-pagination *ngIf="moviesList.length" [maxSize]="10" [collectionSize]="maxPages" [(page)]="page" (pageChange)="pageChange()"></ngb-pagination>
 </div>

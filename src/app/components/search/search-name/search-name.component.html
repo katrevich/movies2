@@ -6,6 +6,6 @@
 <mv-spinner *ngIf="loading"></mv-spinner>
 <div class="movie-results" *ngIf="!loading">
   <ngb-pagination *ngIf="moviesList.length" [maxSize]="10" [collectionSize]="maxPages" [(page)]="page" (pageChange)="pageChange()"></ngb-pagination>
-  <mv-movies-list [movies]="moviesList" [searching]="true" (voted)="propose($event)"></mv-movies-list>
+  <mv-movies-list [movies]="moviesList" [searching]="true" (propose)="propose($event)"></mv-movies-list>
   <ngb-pagination *ngIf="moviesList.length" [maxSize]="10" [collectionSize]="maxPages" [(page)]="page" (pageChange)="pageChange()"></ngb-pagination>
 </div>
