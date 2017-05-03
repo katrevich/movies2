@@ -12,6 +12,7 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 export class SearchRecentComponent implements OnInit {
   page: number = 1;
   moviesList: Array<IMovie> = [];
+  loading: boolean = false;
 
   constructor(
     private _themdb: Themdb,

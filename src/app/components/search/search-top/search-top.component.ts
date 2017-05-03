@@ -13,6 +13,7 @@ export class SearchTopComponent implements OnInit {
   page: number = 1;
   maxPages: number = 1;
   moviesList: Array<IMovie> = [];
+  loading: boolean = false;
 
   constructor(
     private _themdb: Themdb,

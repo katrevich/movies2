@@ -5,11 +5,27 @@ import { IMovieVoted, Movie } from '../../../services/movie.service';
 import { AppState } from '../../../services/app.service';
 import { ModalComponent } from '../modal/modal.component';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { state, transition, style, animate, trigger } from '@angular/animations';
 
 @Component({
   selector: 'mv-movies-list',
   templateUrl: './movies-list.component.html',
-  styleUrls: ['./movies-list.component.scss']
+  styleUrls: ['./movies-list.component.scss'],
+  animations: [
+    trigger('card', [
+      state('fadeIn', style({
+        opacity: '1',
+        transform: 'scale(1)'
+      })),
+      transition('void => *', [
+        style({
+          opacity: '0',
+          transform: 'scale(.8)'
+        }),
+        animate('300ms ease-in')
+      ])
+    ])
+  ]
 })
 export class MoviesListComponent implements OnInit {
   @Input() movies: Array<IMovieVoted> = [];
@@ -25,6 +41,8 @@ export class MoviesListComponent implements OnInit {
   @ViewChild('videos') videosModal: ModalComponent;
   @ViewChild('reviews') reviewsModal: ModalComponent;
   @ViewChild('related') relatedModal: ModalComponent;
+
+  state: string = 'fadeIn';
 
   constructor(
     private _user: User,

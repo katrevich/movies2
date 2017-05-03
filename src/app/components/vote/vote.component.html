@@ -3,7 +3,7 @@
   <div class="empty-movies" *ngIf="!moviesList.length">
     no movies yet...
   </div>
-  <div class="selected-movies" *ngIf="_app.voting && moviesList.length">
+  <div class="selected-movies" *ngIf="app.voting && moviesList.length">
     <label class="my-movies"><input type="checkbox" class="form-check-input" [(ngModel)]="hideMy">Hide my</label>
     <h2>Selected movies</h2>
     <mv-spinner *ngIf="loading"></mv-spinner>
@@ -11,7 +11,7 @@
       <mv-movies-list [movies]="moviesList" [voting]="true" (voted)="vote($event)" (propose)="propose($event)" (veto)="veto($event)" [hideMy]="hideMy"></mv-movies-list>
     </div>
   </div>
-  <div class="winner" *ngIf="!_app.voting && winner">
+  <div class="winner" *ngIf="!app.voting && winner">
     <h3>And the winner is...</h3>
     <h1>{{winner.title}}</h1>
     <div class="movie-img">

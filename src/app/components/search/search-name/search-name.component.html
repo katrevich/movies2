@@ -1,6 +1,6 @@
 <div class="form-group">
   <label for="">Name</label>
-  <input type="text" placeholder="name" class="form-control" [(ngModel)]="name" (keyup.enter)="findMovies()">
+  <input type="text" placeholder="name" class="form-control" [(ngModel)]="name" (keyup.enter)="findMovies(page)">
 </div>
 <h2 *ngIf="moviesList.length">Search results for: <b>{{name}}</b></h2>
 <mv-spinner *ngIf="loading"></mv-spinner>

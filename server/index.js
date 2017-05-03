@@ -6,6 +6,7 @@ const config = require('./db');
 const morgan = require('morgan');
 const jwt = require('jsonwebtoken');
 const encrypt = require('./helpers/encrypt');
+const path = require('path');
 
 mongoose.connect(`mongodb://${config.user}:${config.password}@ds157268.mlab.com:57268/cinema`);
 
@@ -38,8 +39,14 @@ app.listen(port, function () {
   console.log('http://localhost/' + port);
 })
 
-serveApp.use('*', (req, res) => {
-  res.send('dist/index.html');
+serveApp.get(['/', '/vote', '/propose', '/admin'], (req, res) => {
+  let url = path.resolve(__dirname + '/dist/index.html')
+  res.sendFile(url);
 })
+
+serveApp.get(/^(.+)$/, function(req, res){
+     console.log('static file request : ' + req.params);
+     res.sendfile( __dirname + '/dist' + req.params[0]);
+ });
 
 serveApp.listen(80);

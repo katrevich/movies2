@@ -8,22 +8,23 @@ import { ToastsManager } from 'ng2-toastr/ng2-toastr';
   styleUrls: ['./admin-general.component.css']
 })
 export class AdminGeneralComponent implements OnInit {
+  loading: boolean = false;
 
   constructor(
-    private _app: AppState,
+    public app: AppState,
     private _toasts: ToastsManager
   ) { }
 
   restart(): void {
-    this._app.restartVoting();
+    this.app.restartVoting();
   }
 
   end(): void {
-    this._app.endVoting()
+    this.app.endVoting()
               .subscribe(res => {
                 if(res.success) {
                   this._toasts.success(res.message);
-                  this._app.getState();
+                  this.app.getState();
                 }
               })
   }

@@ -17,7 +17,7 @@ export class VoteComponent implements OnInit {
   constructor(
     private _user: User,
     private _movie: Movie,
-    private _app: AppState
+    public app: AppState
   ) { }
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class VoteComponent implements OnInit {
     this._movie.getMovies().subscribe(res => {
       this.moviesList = res;
       this.loading = false;
-      if(!this._app.voting && this.moviesList.length){
+      if(!this.app.voting && this.moviesList.length){
         this.winner = this.getWinner(this.moviesList);
       }
     })

@@ -68,7 +68,7 @@ export class SearchDiscoverComponent implements OnInit {
   keywords: Array<Object> = [];
   cachedKeywords: Array<Object> = [];
 
-  constructor(private _themdb: Themdb, private _user: User, private _movie: Movie, private _toasts: ToastsManager, private cdRef: ChangeDetectorRef) { }
+  constructor(private _themdb: Themdb, private _user: User, private _movie: Movie, private _toasts: ToastsManager, private _cdRef: ChangeDetectorRef) { }
 
   searchKeywords = (text$: Observable<string>) =>
     text$
@@ -135,7 +135,7 @@ export class SearchDiscoverComponent implements OnInit {
 
   ngAfterViewChecked() {
     //explicit change detection to avoid "expression-has-changed-after-it-was-checked-error" wtf?
-    this.cdRef.detectChanges();
+    this._cdRef.detectChanges();
   }
 
 }
